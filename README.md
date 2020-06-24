@@ -43,7 +43,7 @@ then, choose carefully.
 - GitHub Package:
 
 First [setup your github registry](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages)
-  - Gralde
+  - Gradle
     ```gradle
     dependencies {
         implementation 'io.barddoo:kson:1.0.0'
