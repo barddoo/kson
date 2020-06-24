@@ -1,5 +1,6 @@
 # KSON
 [![Build Status](https://travis-ci.com/barddoo/kson.svg?branch=master)](https://travis-ci.com/barddoo/kson)
+[![](https://jitpack.io/v/barddoo/kson.svg)](https://jitpack.io/#barddoo/kson)
 ### *KSON* is a Kotlin friendly fork of [org.json](https://github.com/stleary/JSON-java) 
 
 JSON is a light-weight, language independent, data interchange format.
