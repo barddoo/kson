@@ -71,6 +71,29 @@ All `put()` are now `add()`
 
 `getKsonArray()`/`optKsonArray()` = `array()`
 
+### Examples
+
+```kotlin
+val obj = """{"prop": "blue"}"""
+val json = Kson(obj)
+println(json["prop"])
+// blue
+
+json["prop1"] = "read"
+println(json)
+// {"prop":"blue", "prop1":"read"}
+
+val collection = (1..10).toList()
+val array = collection.toJsonArray()
+array.add("""{"animal": "monkey"}""".toJson())
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, {"animal":"monkey"}]
+
+val map = mapOf("str" to "0", "str1" to "2", "str2" to "2",
+    "str15" to "15", "map" to mapOf("key" to "val"))
+val arrayKson = map.toJsonArray()
+// [{"str":"0", "str1":"2", "str2":"2", "str15":"15", "map":{"key": "val"}}]
+```
+
 ### Recommendations
 
 - `iteratorBy<T>()` to iterate over KsonArray/Kson by type
@@ -85,8 +108,8 @@ json.add(84)
 for(element: Int in json.iteratorBy<Int>()) {
     println(element)
 }
-
 //Only integers will be printed
+
 ```
 
 - `getBy<T>()` to get element by type
