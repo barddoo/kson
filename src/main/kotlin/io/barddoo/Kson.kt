@@ -132,10 +132,10 @@ class Kson() : LinkedHashMap<String, Any?>() {
             // Check if key exists
             if (get(key) != null) {
                 // key already exists
-                throw x.syntaxError("""Duplicate key "$key"""")
+                throw x.syntaxError("Duplicate key '$key'")
             }
             // Only add value if non-null
-            val value = x.nextValue()
+            val value: Any? = x.nextValue()
             if (value != null) {
                 this[key] = value
             }
@@ -153,9 +153,9 @@ class Kson() : LinkedHashMap<String, Any?>() {
     }
 
     /**
-     * Construct a Kson from a Map.
+     * Construct a [Kson] from a Map.
      *
-     * @param map A map object that can be used to initialize the contents of the Kson. If
+     * @param map A map object that can be used to initialize the contents of the [Kson]. If
      * the key null, it will be ignored.
      */
     constructor(map: Map<*, *>) : this() {
@@ -355,7 +355,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
                 this[key] = any.add(value)
             }
             else -> {
-                throw wrongValueFormatException(key, "KsonArray", null)
+                throw wrongValueFormatException(key, "KsonArray")
             }
         }
         return this
@@ -631,7 +631,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
             any
         } else try {
             stringToNumber(any.toString())
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             defaultValue
         }
     }
@@ -713,24 +713,24 @@ class Kson() : LinkedHashMap<String, Any?>() {
     }
 
     /**
-     * Queries and returns a value from this object using `jsonPointer`, or
+     * Queries and returns a value from this object using `ksonPointer`, or
      * returns null if the query fails due to a missing key.
      *
-     * @param jsonPointer the string representation of the JSON pointer
+     * @param ksonPointer the string representation of the JSON pointer
      * @return the queried value or `null`
-     * @throws IllegalArgumentException if `jsonPointer` has invalid syntax
+     * @throws IllegalArgumentException if `ksonPointer` has invalid syntax
      */
     fun query(jsonPointer: String): Any? {
         return query(KsonPointer(jsonPointer))
     }
 
     /**
-     * Queries and returns a value from this object using `jsonPointer`, or
+     * Queries and returns a value from this object using `ksonPointer`, or
      * returns null if the query fails due to a missing key.
      *
      * @param ksonPointer The JSON pointer
      * @return the queried value or `null`
-     * @throws IllegalArgumentException if `jsonPointer` has invalid syntax
+     * @throws IllegalArgumentException if `ksonPointer` has invalid syntax
      */
     fun query(ksonPointer: KsonPointer): Any? {
         return try {
@@ -881,7 +881,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
                 }
                 try {
                     writeValue(writer, entry.value, indentFactor, indent)
-                } catch (e: Exception) {
+                } catch (e: Throwable) {
                     throw KsonException("Unable to write Kson value for key: $key", e)
                 }
             }
@@ -902,7 +902,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
                     }
                     try {
                         writeValue(writer, value, indentFactor, newIndent)
-                    } catch (e: Exception) {
+                    } catch (e: Throwable) {
                         throw KsonException("Unable to write Kson value for key: $key", e)
                     }
                     needsComma = true
@@ -1073,7 +1073,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
                 BigDecimal((`val` as Number).toLong())
             } else try {
                 BigDecimal(`val`.toString())
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 defaultValue
             }
             // don't check if it's a string in case of unchecked Number subclasses
@@ -1115,7 +1115,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
                 if (isDecimalNotation(valStr)) {
                     BigDecimal(valStr).toBigInteger()
                 } else BigInteger(valStr)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 defaultValue
             }
             // don't check if it's a string in case of unchecked Number subclasses
@@ -1178,7 +1178,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
         </A> */
         private fun <A : Annotation?> getAnnotation(
             m: Method?,
-            annotationClass: Class<A>?
+            annotationClass: Class<A>?,
         ): A? {
             // if we have invalid data the result is null
             if (m == null || annotationClass == null) {
@@ -1228,7 +1228,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
         </A> */
         private fun getAnnotationDepth(
             m: Method?,
-            annotationClass: Class<out Annotation>?
+            annotationClass: Class<out Annotation>?,
         ): Int {
             // if we have invalid data the result is -1
             if (m == null || annotationClass == null) {
@@ -1283,7 +1283,6 @@ class Kson() : LinkedHashMap<String, Any?>() {
          * @param string A String
          * @return A String correctly formatted for insertion in a JSON text.
          */
-        @JvmStatic
         fun quote(string: String?): String {
             val sw = StringWriter()
             synchronized(sw.buffer) {
@@ -1501,17 +1500,14 @@ class Kson() : LinkedHashMap<String, Any?>() {
         @JvmStatic
         fun writeValue(
             writer: Writer, value: Any?, indentFactor: Int,
-            indent: Int
+            indent: Int,
         ): Writer {
             when {
                 value == null -> {
                     writer.write("null")
                 }
                 value is KsonString -> {
-                    val o: Any?
-                    o = value.toJSONString()
-
-                    writer.write(o?.toString() ?: quote(value.toString()))
+                    writer.write(value.toJson())
                 }
                 value is Number -> {
                     // not all Numbers may match actual JSON Numbers. i.e. fractions or Imaginary
@@ -1566,9 +1562,7 @@ class Kson() : LinkedHashMap<String, Any?>() {
          * @return JSONException that can be thrown.
          */
         private fun wrongValueFormatException(key: String): KsonException {
-            return KsonException(
-                "Kson[" + quote(key) + "] is not a valid", null
-            )
+            return KsonException("Kson[" + quote(key) + "] is not a valid")
         }
 
         /**
@@ -1581,11 +1575,8 @@ class Kson() : LinkedHashMap<String, Any?>() {
         private fun wrongValueFormatException(
             key: String?,
             valueType: String,
-            value: Any?
         ): KsonException {
-            return KsonException(
-                "Kson[" + quote(key) + "] is not a " + valueType + " (" + value + ").", null
-            )
+            return KsonException("Kson[" + quote(key) + "] is not a " + valueType)
         }
     }
 }

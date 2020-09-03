@@ -32,7 +32,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Use this annotation on a getter method to override the Bean name
- * parser for Bean -&gt; Kson mapping. A value set to empty string <code>""</code>
+ * parser for Bean -&gt; Kson mapping. A value set to empty string `""`
  * will have the Bean parser fall back to the default field name processing.
  */
 @Documented

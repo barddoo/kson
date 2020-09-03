@@ -39,14 +39,14 @@ SOFTWARE.
  * A JSON Pointer is a simple query language defined for JSON documents by
  * <a href="https://tools.ietf.org/html/rfc6901">RFC 6901</a>.
  * <p>
- * In a nutshell, io.barddoo.JSONPointer allows the user to navigate into a JSON document using
+ * In a nutshell, io.barddoo.KsonPointer allows the user to navigate into a JSON document using
  * strings, and retrieve targeted objects, like a simple form of XPATH. Path segments are separated
  * by the '/' char, which signifies the root of the document when it appears as the first char of
- * the string. Array elements are navigated using ordinals, counting from 0. io.barddoo.JSONPointer
+ * the string. Array elements are navigated using ordinals, counting from 0. io.barddoo.KsonPointer
  * strings may be extended to any arbitrary number of segments. If the navigation is successful, the
  * matched item is returned. A matched item may be a Kson, a io.barddoo.KsonArray, or a JSON
- * value. If the io.barddoo.JSONPointer string building fails, an appropriate exception is thrown. If
- * the navigation fails to find a match, a io.barddoo.JSONPointerException is thrown.
+ * value. If the io.barddoo.KsonPointer string building fails, an appropriate exception is thrown. If
+ * the navigation fails to find a match, a io.barddoo.KsonPointerException is thrown.
  *
  * @author JSON.org
  * @version 2016-05-14
@@ -55,13 +55,13 @@ public class KsonPointer {
 
     // used for URL encoding and decoding
     private static final String ENCODING = "utf-8";
-    // Segments for the io.barddoo.JSONPointer string
+    // Segments for the io.barddoo.KsonPointer string
     private final List<String> refTokens;
 
     /**
-     * Pre-parses and initializes a new {@code io.barddoo.JSONPointer} instance. If you want to evaluate
+     * Pre-parses and initializes a new {@code io.barddoo.KsonPointer} instance. If you want to evaluate
      * the same JSON Pointer on different JSON documents then it is recommended to keep the {@code
-     * io.barddoo.JSONPointer} instances due to performance considerations.
+     * io.barddoo.KsonPointer} instances due to performance considerations.
      *
      * @param pointer the JSON String or URI Fragment representation of the JSON pointer.
      * @throws IllegalArgumentException if {@code pointer} is not a valid JSON pointer
@@ -118,17 +118,17 @@ public class KsonPointer {
 
     /**
      * Static factory method for {@link Builder}. Example usage:
+     * <p>
+     * ```
+     * val pointer = KsonPointer.builder()
+     * .append("obj")
+     * .append("other~key").append("another/key")
+     * .append("\"")
+     * .append(0)
+     * .build();
+     * ```
      *
-     * <pre><code>
-     * io.barddoo.JSONPointer pointer = io.barddoo.JSONPointer.builder()
-     *       .append("obj")
-     *       .append("other~key").append("another/key")
-     *       .append("\"")
-     *       .append(0)
-     *       .build();
-     * </code></pre>
-     *
-     * @return a builder instance which can be used to construct a {@code io.barddoo.JSONPointer}
+     * @return a builder instance which can be used to construct a {@code io.barddoo.KsonPointer}
      * instance by chained {@link Builder#append(String)} calls.
      */
     public static Builder builder() {
@@ -174,7 +174,7 @@ public class KsonPointer {
      * chars to be escaped are ~, which maps to ~0, and /, which maps to ~1. Backslashes and double
      * quote chars are also escaped.
      *
-     * @param token the io.barddoo.JSONPointer segment value to be escaped
+     * @param token the io.barddoo.KsonPointer segment value to be escaped
      * @return the escaped value for the token
      */
     private static String escape(String token) {
@@ -214,7 +214,7 @@ public class KsonPointer {
     }
 
     /**
-     * Returns a string representing the io.barddoo.JSONPointer path value using string representation
+     * Returns a string representing the io.barddoo.KsonPointer path value using string representation
      */
     @Override
     public String toString() {
@@ -243,12 +243,12 @@ public class KsonPointer {
 
 
     /**
-     * This class allows the user to build a io.barddoo.JSONPointer in steps, using exactly one segment
+     * This class allows the user to build a io.barddoo.KsonPointer in steps, using exactly one segment
      * in each step.
      */
     public static class Builder {
 
-        // Segments for the eventual io.barddoo.JSONPointer string
+        // Segments for the eventual io.barddoo.KsonPointer string
         private final List<String> refTokens = new ArrayList<>();
 
         /**

@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.dokka") version "0.10.1"
+    kotlin("jvm") version "1.4.0"
+    id("org.jetbrains.dokka") version "1.4.0-rc"
     `java-library`
     jacoco
     `maven-publish`
@@ -15,7 +15,6 @@ description = descriptionKj
 group = groupKj
 
 dependencies {
-    implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
     testImplementation("com.jayway.jsonpath:json-path:2.4.0")
     testImplementation("org.mockito:mockito-core:3.3.3")
@@ -54,14 +53,6 @@ tasks {
             events("passed", "skipped", "failed")
         }
         finalizedBy(jacocoTestReport)
-    }
-
-    dokka {
-        outputFormat = "gfm"
-        outputDirectory = "$buildDir/dokka"
-        configuration {
-            includes = listOf("README.md")
-        }
     }
 
     javadoc {

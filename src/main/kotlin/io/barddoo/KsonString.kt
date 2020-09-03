@@ -1,4 +1,4 @@
-package io.barddoo;
+package io.barddoo
 /*
 Copyright (c) 2002 JSON.org
 
@@ -25,19 +25,18 @@ SOFTWARE.
 
 
 /**
- * The <code>io.barddoo.JSONString</code> interface allows a <code>toJSONString()</code> method so
- * that a class can change the behavior of
- * <code>Kson.toString()</code>, <code>io.barddoo.KsonArray.toString()</code>,
- * and <code>io.barddoo.JSONWriter.value(</code>Object<code>)</code>. The
- * <code>toJSONString</code> method will be used instead of the default behavior
- * of using the Object's <code>toString()</code> method and quoting the result.
+ * The [KsonString] interface allows a `toJson()` method so that a class
+ * can change the behavior o `Kson.toString()`, `KsonArray.toString()`,
+ * and `JSONWriter.value(`Object`)`. The `toJson` method will be used
+ * instead of the default behavior of using the Object's `toString()`
+ * method and quoting the result.
  */
-public interface KsonString {
+interface KsonString {
 
     /**
-     * The <code>toJSONString</code> method allows a class to produce its own JSON serialization.
+     * Allows a class to produce its own JSON serialization.
      *
      * @return A strictly syntactically correct JSON text.
      */
-    String toJSONString();
+    fun toJson(): String
 }

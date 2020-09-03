@@ -1,4 +1,5 @@
-package io.barddoo;
+package io.barddoo
+
 /*
 Copyright (c) 2002 JSON.org
 
@@ -25,44 +26,38 @@ SOFTWARE.
 
 
 /**
- * The io.barddoo.JSONException is thrown by the JSON.org classes when things are amiss.
+ * The [JSONException] is thrown by the io.barddoo.Kson classes when things are amiss.
  *
  * @author JSON.org
  * @version 2015-12-09
  */
-public class KsonException extends RuntimeException {
-
+open class KsonException : RuntimeException {
     /**
-     * Serialization ID
-     */
-    private static final long serialVersionUID = 0;
-
-    /**
-     * Constructs a {@link KsonException} with an explanatory message.
+     * Constructs a [KsonException] with an explanatory message.
      *
      * @param message Detail about the reason for the exception.
      */
-    public KsonException(final String message) {
-        super(message);
-    }
+    constructor(message: String?) : super(message)
 
     /**
-     * Constructs a {@link KsonException} with an explanatory message and cause.
+     * Constructs a [KsonException] with an explanatory message and cause.
      *
      * @param message Detail about the reason for the exception.
      * @param cause   The cause.
      */
-    public KsonException(final String message, final Throwable cause) {
-        super(message, cause);
-    }
+    constructor(message: String, cause: Throwable) : super(message, cause)
 
     /**
-     * Constructs a new {@link KsonException} with the specified cause.
+     * Constructs a new [KsonException] with the specified cause.
      *
      * @param cause The cause.
      */
-    public KsonException(final Throwable cause) {
-        super(cause.getMessage(), cause);
-    }
+    constructor(cause: Throwable) : super(cause.message, cause)
 
+    companion object {
+        /**
+         * Serialization ID
+         */
+        private const val serialVersionUID: Long = 0
+    }
 }
