@@ -22,7 +22,7 @@ then, choose carefully.
     ```gradle
     maven { url 'https://jitpack.io' }
     dependencies {
-        implementation 'com.github.barddoo:kson:1.0.0'
+        implementation 'com.github.barddoo:kson:2.0.0'
     }
     ```
   - Maven
@@ -37,7 +37,7 @@ then, choose carefully.
     <dependency>
         <groupId>com.github.barddoo</groupId>
         <artifactId>kson</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
     ```
 - GitHub Package:
@@ -46,7 +46,7 @@ First [setup your github registry](https://help.github.com/en/packages/using-git
   - Gradle
     ```gradle
     dependencies {
-        implementation 'io.barddoo:kson:1.0.0'
+        implementation 'io.barddoo:kson:2.0.0'
     }
     ```
   - Maven
@@ -54,7 +54,7 @@ First [setup your github registry](https://help.github.com/en/packages/using-git
     <dependency>
         <groupId>io.barddoo</groupId>
         <artifactId>kson</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
     ```
 
