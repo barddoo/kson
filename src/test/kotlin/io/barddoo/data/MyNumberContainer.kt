@@ -5,9 +5,9 @@ package io.barddoo.data
  * @author John Aylward
  */
 class MyNumberContainer {
-  /**
-   * @return a MyNumber.
-   */
-  val myNumber = MyNumber()
+    /**
+     * @return a MyNumber.
+     */
+    val myNumber = MyNumber()
 
 }
